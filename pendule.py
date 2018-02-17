@@ -14,9 +14,11 @@ def draw_line(x1,y1,x2,y2,color):
    can1.create_oval(x2-5,y2-5,x2+5,y2+5, outline=color, fill=color, width=2)
 
 def stop():
-    "arrêt de l'animation"
-    global flag    
-    flag =0
+    global flag 
+    if flag == 0:    
+      flag =1
+    else:
+      flag =0
 
 def exit():
     quit()
@@ -33,12 +35,13 @@ def play(posx,posy,i):
    posy = abs((sin(radians(i)))*(height*lg/2))
    draw_line(width/2,0,posx,posy,'black')
   
-   if flag == 1 :
-    if i < 360 :
-       i=i+4
+   
+   if i < 360 :
+       if flag==1:
+         i=i+4
        #time.sleep(0.1)
        fen1.after(int(200*sqrt(lg)),play,posx,posy,i)
-    else:
+   else:
        fen1.after(int(200*sqrt(lg)),play,posx,posy,0)
       
     
@@ -50,7 +53,7 @@ fen1 = Tk()
 
 can1 = Canvas(fen1, width =width, height =height, bg ='white')
 can1.pack(side =TOP, padx =5, pady =5)
-b2 = Button(fen1, text ='Stop', command =stop)
+b2 = Button(fen1, text ='Pause', command =stop)
 b3 = Button(fen1, text ='Exit', command =exit)
 
 b2.pack(side =LEFT, padx =3, pady =3)
